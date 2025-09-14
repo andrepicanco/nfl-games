@@ -1,12 +1,48 @@
 import styled from 'styled-components'
 import schedules from '../data/schedules/schedules.json'
 
-const Colunas = styled.th`
+const ComponenTabela = styled.div`
+    display: flex;
+    flex-direction: column;
+    font-size: calc(8px + 1vmin);
+    text-align: center;
+    margin: 2vmin;
+    tablecontainer {
+        overflow-x: auto;
+    }
 `
 
-const Linhas = styled.tr`
+const Tabela = styled.table`
+    width: auto;
+    height: auto;
+    border: 1px solid;
+    border-collapse: collapse;
+    padding: 4px;
 `
 
+const TableHeader = styled.th`
+    border: 1px solid;
+    padding: 4px;
+    background-color: #002f8dff;
+    color: white;
+`
+
+const Row = styled.tr`
+    padding: 4px;
+    background-color: #f7f7f7ff;
+
+    &:hover {
+        background-color: #2c4b8aff;
+        color: white;
+    }
+`
+
+const Dados = styled.td`
+    border: 1px solid;
+    padding: 6px 4px;
+`
+
+// Retorna a tabela completa do time selecionado.
 function returnSchedule(team) {
     
     const tabelaFinal = []
@@ -22,8 +58,12 @@ function returnSchedule(team) {
     
 }
 
+/*
+        AJUSTAR TABELAS - DINAMICAMENTE
+*/
 const tabelas = schedules.BAL
 
+// Retorna dados de partidas, através do "match_id"
 function game(tabelas, match_id) {
 
     const semana = `Week ${tabelas.week[match_id]}`
@@ -32,32 +72,50 @@ function game(tabelas, match_id) {
     const casa = `${tabelas.home_team[match_id]}: ${tabelas.home_score[match_id]}`
     const fora = `${tabelas.away_team[match_id]}: ${tabelas.away_score[match_id]}`
 
+    return ( [semana, data_hora, casa, fora, estadio] )
+
+}
+
+// const games = returnSchedule('CLE')
+
+const nomesCols = ['Week', 'Date/Time', 'Home', 'Away', 'Stadium']
+
+function ScheduleTable(NflTeam) {
+
+    // const games = returnSchedule('BAL')
+    const games = returnSchedule(NflTeam)
+    
     return (
-        // [semana, data_hora, estadio, casa, fora]
-        `${semana} - ${data_hora} @ ${estadio}` +
-        `  ${casa} || ${fora}`
+        // Montando tabela de jogos. Headers, linhas e dados
+        <ComponenTabela>
+            <Tabela>
+                <thead>
+                    <Row>
+                        { nomesCols.map( (col) => (
+                            <TableHeader>{col}</TableHeader>
+                        ))}
+                    </Row>
+                </thead>
+                <tbody>
+                    {games.map( (game, n) => (
+
+                        <Row key={n}>
+                            {
+                                game.map( (col, i) => (
+                                    <Dados key={i}>{col}</Dados>
+                                ))
+                            }
+                        </Row>
+
+                    ))};
+                </tbody>
+            </Tabela>
+        </ComponenTabela>
     )
 
 }
 
-const games = returnSchedule('CLE')
-
-const nomesCols = ['Semana', 'Data', 'Casa', 'Fora', 'Estádio']
-
-// function games() {
-
-//     return (
-//         // <Colunas>
-//         //     nomesCols.map(col =>)
-//         // </Colunas>
-//         // <Linhas></Linhas>
-//     )
-
-// }
-
-export default games
-
-// export default JSON.stringify(games)
+export default ScheduleTable
 
 /*
 

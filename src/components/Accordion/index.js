@@ -1,21 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-/*
-.Primer_Brand__Accordion-module__Accordion--default___wLsHR::after {
-  content: '';
-  border: 3px solid var(--brand-Accordion-border-color-default);
-  height: 0;
-  transition: var(--brand-animation-duration-fast) transform;
-  transform: scaleY(0);
-  transform-origin: 50% 100%;
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
-*/
-
 const AccordionButton = styled.button`
     display: flex;
     flex-direction: column;
@@ -34,7 +19,7 @@ const AccordionButton = styled.button`
 `
 
 const Painel = styled.div`
-  max-height: ${({ isOpen }) => (isOpen ? "500px": "0")};
+  max-height: ${({ isOpen }) => (isOpen ? "1000px": "0")};
   overflow: hidden;
   transition: max-height: 0.3 ease;
   background: #e2e2e2ff;
