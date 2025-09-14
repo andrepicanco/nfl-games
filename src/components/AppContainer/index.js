@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const AppContainer = styled.div`
-  background-color: #c4d6f9ff;
+  background-color: #f4f8ffff;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
